@@ -18,7 +18,7 @@ export default function Navbar({ pages, current, onChange, theme, toggleTheme, o
         </nav>
         <div className="tools">
           <span className="live"><Wifi size={13} />LIVE</span>
-          <button className="icon" title="Unduh Report (CSV)" onClick={onDownload}><Download size={16} /></button>
+          <button className="icon" title="Unduh Report (Excel)" onClick={onDownload}><Download size={16} /></button>
           <button className="icon" title="Ganti tema" onClick={toggleTheme}>{theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}</button>
         </div>
       </div>

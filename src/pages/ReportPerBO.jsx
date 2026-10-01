@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Page, DataTable, EmptyState, ProgressBar, KPICard } from "../components/ui";
 import { groupByBO, pct, fmtPct } from "../utils/calculations";
-import { exportCsv } from "../utils/exportCsv";
+import { exportExcel } from "../utils/exportExcel";
 
 export default function ReportPerBO({ rows, filter }) {
   const bos = useMemo(() => groupByBO(rows, filter), [rows, filter]);
@@ -19,7 +19,7 @@ export default function ReportPerBO({ rows, filter }) {
     <Page title="Report Pengisian Google Review per BO" lead="Agregasi per Branch Office → KK/KCP dan Unit. Target BO = 5; KK/KCP & Unit = 5 × jumlah uker.">
       <div className="kpis">{[["Jumlah BO", bos.length], ["Total Input", sum("total")], ["Total Target", sum("target")], ["Pencapaian", fmtPct(pct(sum("total"), sum("target")))]]
         .map(([l, v], i) => <KPICard key={l} label={l} value={v} i={i} />)}</div>
-      <div className="bar"><button className="ghost" onClick={() => exportCsv("report-per-bo.csv", columns.map((c) => c.label), bos.map((r) => columns.map((c) => (typeof r[c.key] === "number" && c.key.toLowerCase().includes("pct") ? r[c.key].toFixed(1) : r[c.key]))))}>⬇ Unduh CSV</button></div>
+      <div className="bar"><button className="ghost" onClick={() => exportExcel("report-per-bo.xlsx", columns.map((c) => c.label), bos.map((r) => columns.map((c) => (typeof r[c.key] === "number" && c.key.toLowerCase().includes("pct") ? r[c.key].toFixed(1) : r[c.key]))))}>⬇ Unduh Excel</button></div>
       <div className="card glass"><DataTable columns={columns} rows={bos} rowKey={(r) => r.bo} /></div>
     </Page>
   );

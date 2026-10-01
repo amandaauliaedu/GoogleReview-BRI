@@ -60,3 +60,8 @@ ol.rank:not(:has(.pb)) {list-style:decimal;padding-left:20px;display:block}
 .recharts-tooltip-wrapper .recharts-default-tooltip{background:var(--glass2)!important;border:1px solid var(--bd)!important;border-radius:10px;color:var(--tx)}
 .skel{height:34px;background:var(--bd);border-radius:8px;margin-bottom:10px}.empty{text-align:center;color:var(--mu);padding:40px}.err{color:var(--bad)}
 @media(max-width:900px){.topin{flex-wrap:wrap;gap:10px}.pills{order:3;width:100%;overflow:auto;flex-wrap:nowrap;margin:0}.orbit{display:none}.grid2{grid-template-columns:1fr}.filters{position:static}.logo small{display:none}}
+.clk{cursor:pointer;transition:.2s}.clk:hover{transform:translateY(-3px)}.kpi.act{border-color:var(--pr);box-shadow:0 0 0 2px var(--pr),var(--shadow)}
+.chip{padding:6px 12px;border-radius:99px;font-size:12px;font-family:var(--mono);background:var(--glass);border:1px solid var(--bd)}
+.dl{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}.dl b{display:block}.dl small{color:var(--mu)}
+.btn:disabled,button.ghost:disabled{opacity:.4;cursor:default}
+.chead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}.chead select{min-width:130px;padding:6px 10px;font-size:12px}

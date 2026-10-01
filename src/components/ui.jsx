@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { fmtPct } from "../utils/calculations";
 
-export const KPICard = ({ label, value, unit, icon, i = 0, hint }) => (
-  <motion.div className="kpi" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} whileHover={{ y: -3 }}>
+export const KPICard = ({ label, value, unit, icon, i = 0, hint, onClick, active }) => (
+  <motion.div className={`kpi${onClick ? " clk" : ""}${active ? " act" : ""}`} onClick={onClick} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} whileHover={{ y: -3 }}>
     <small>{label}</small>{icon && <span className="kico">{icon}</span>}<div>{value}{unit && <sub>{unit}</sub>}</div>{hint && <em>{hint}</em>}
   </motion.div>
 );

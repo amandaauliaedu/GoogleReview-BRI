@@ -14,6 +14,7 @@ export function parseDate(c) {
   return isNaN(d) ? null : d;
 }
 const p2 = (n) => String(n).padStart(2, "0");
+const titleCase = (s) => s.toLowerCase().replace(/(^|\s)(\S)/g, (m, a, b) => a + b.toUpperCase());
 const txt = (c) => (c ? String(c.f ?? c.v ?? "").trim() : "");
 
 export async function fetchMaster() {
@@ -32,8 +33,9 @@ export async function fetchMaster() {
     const bo = txt(c(I.bo)), kode = txt(c(I.kode)), nama = txt(c(I.nama));
     if (!bo && !kode && !nama && !d) continue; // baris kosong
     rows.push({
-      display: labels.map((_, i) => txt(r.c?.[i])),
+      display: labels.map((l, i) => (/nasabah/i.test(l) ? titleCase(txt(r.c?.[i])) : txt(r.c?.[i]))),
       date: d ? `${d.getFullYear()}-${p2(d.getMonth() + 1)}-${p2(d.getDate())}` : "",
+      day: d ? d.getDate() : 0, mon: d ? d.getMonth() + 1 : 0, year: d ? d.getFullYear() : 0,
       month: d ? `${d.getFullYear()}-${p2(d.getMonth() + 1)}` : "",
       bc: txt(c(I.bc)), bo: bo || "(Tanpa BO)", kode: kode || "-", nama: nama || "(Tanpa Uker)",
       jenis: txt(c(I.jenis)), rate: Number(txt(c(I.rate))) || 0,

@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
+import { Download } from "lucide-react";
 import { Page, KPICard, DataTable, EmptyState } from "../components/ui";
 import { uniqueCount } from "../utils/calculations";
+import { exportExcel } from "../utils/exportExcel";
 
 export default function MasterData({ rows, labels }) {
   const [q, setQ] = useState("");
@@ -9,11 +11,15 @@ export default function MasterData({ rows, labels }) {
   const columns = labels.map((l, i) => ({ key: String(i), label: l, render: (r) => r.display[i], sortValue: (r) => (isNaN(r.display[i]) || r.display[i] === "" ? r.display[i] : Number(r.display[i])) }));
   const data = list.map((r) => ({ ...r, ...Object.fromEntries(r.display.map((v, i) => [String(i), v])) }));
   return (
-    <Page title="Master Data" lead="Data response Google Review langsung dari Google Sheets (kolom 10–28 disembunyikan).">
+    <Page title="Live Response" lead="Data response Google Review langsung dari Google Sheets.">
       <div className="kpis">{[["Total Response", list.length], ["Total Uker", uniqueCount(list, (r) => r.ukerKey)], ["Total BO", uniqueCount(list, (r) => r.bo)], ["Total KK/KCP", by("KK/KCP")], ["Total Unit", by("Unit")]]
         .map(([l, v], i) => <KPICard key={l} label={l} value={v} i={i} />)}</div>
-      <div className="bar"><input placeholder="Cari BO, kode uker, nama uker…" value={q} onChange={(e) => setQ(e.target.value)} /></div>
-      {list.length === 0 ? <EmptyState /> : <div className="card"><DataTable columns={columns} rows={data} /></div>}
+      <div className="card glass dl">
+        <div><b>Download Excel</b><small>Unduh {list.length} baris sesuai filter &amp; pencarian saat ini dalam format .xlsx</small></div>
+        <button className="btn primary" disabled={!list.length} onClick={() => exportExcel("live-response.xlsx", labels, list.map((r) => r.display), "Live Response")}><Download size={15} /> Unduh Excel</button>
+      </div>
+      <div className="bar"><input placeholder="Cari BO, kode uker, nama uker, nasabah…" value={q} onChange={(e) => setQ(e.target.value)} /></div>
+      {list.length === 0 ? <EmptyState /> : <div className="card glass"><DataTable columns={columns} rows={data} /></div>}
     </Page>
   );
 }
